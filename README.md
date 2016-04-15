@@ -43,6 +43,14 @@ TODO
 
 TODO
 
+## Profiling
+
+TODO
+
+#### Comparing profiles for two commits
+
+TODO
+
 ## Reading the Core
 
 TODO
@@ -67,18 +75,18 @@ I guess the [32-bit one-core benchmarks](http://benchmarksgame.alioth.debian.org
 
 ## FAQ
 
-#### Can I clone this repo and submit a faster Haskell benchmark program to Alioth and then merge my work back here?
+#### Can I fork this repo and submit a faster Haskell benchmark program to Alioth and then merge my work back here?
 
 Yes please!
 
-#### Can I clone this repo and submit a faster Haskell benchmark program to Alioth without merging back here?
+#### Can I fork this repo and submit a faster Haskell benchmark program to Alioth without merging back here?
 
-Sure, go for it. We can always copy-paste your code back here from the website. We just want to see Haskell ranked in its rightful place on the Benchmarks Game website: tied for #1 with Rust.
+Yeah, go for it. We can always copy-paste your code back here from the website. We just want to see Haskell ranked in its rightful place on the Benchmarks Game website: tied for #1 with Rust.
 
 #### Is this a game or like, real?
 
-Bad software has consequences. Good languages produce good software. In the eternal quarrel over which languages are good, the Alioth website is one of the hardest data points.
+Bad software has consequences. Good languages produce good software. In the eternal quarrel over which languages are good, the Alioth website is the sturdiest point of reference.
 
 #### Isn't it true that all computer programming languages are good, you just have to pick the right tool for the job?
 
-No.
+[No.](http://www.thocp.net/biographies/papers/backus_turingaward_lecture.pdf)

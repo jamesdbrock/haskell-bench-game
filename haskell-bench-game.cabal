@@ -1,0 +1,20 @@
+name:                haskell-bench-game
+version:             0.1.0.0
+synopsis:            Pwn the Alioth Computer Language Benchmark Game with Haskell
+description:         Please see README.md
+homepage:            http://github.com/jamesdbrock/haskell-bench-game
+license:             BSD3
+author:              James Brock
+maintainer:          jamesbrock@gmail.com
+build-type:          Simple
+-- cabal-version:       >=1.10
+
+source-repository head
+  type:     git
+  location: https://github.com/jamesdbrock/fannkuch-redux
+
+executable regex-dna-02 -- regex-dna Haskell GHC #2
+  hs-source-dirs:     src
+  main-is:            regex-dna-02.hs
+  ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -Wall
+  build-depends:      base,parallel,regex-pcre-builtin,bytestring,array
