@@ -7,14 +7,24 @@ license:             BSD3
 author:              James Brock
 maintainer:          jamesbrock@gmail.com
 build-type:          Simple
--- cabal-version:       >=1.10
+cabal-version:       >=1.2
 
 source-repository head
   type:     git
   location: https://github.com/jamesdbrock/fannkuch-redux
 
-executable regex-dna-02 -- regex-dna Haskell GHC #2
+-- regex-dna Haskell GHC #2
+executable regex-dna-02
   hs-source-dirs:     src
   main-is:            regex-dna-02.hs
   ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -Wall
   build-depends:      base,parallel,regex-pcre-builtin,bytestring,array
+
+-- regex-dna Haskell GHC #2
+-- benchmark regex-dna-02
+executable regex-dna-02-criterion
+  hs-source-dirs:     src
+  main-is:            regex-dna-02-criterion.hs
+  ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -Wall
+  build-depends:      base,parallel,regex-pcre-builtin,bytestring,array,criterion
+
