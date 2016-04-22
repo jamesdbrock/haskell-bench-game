@@ -14,17 +14,29 @@ source-repository head
   location: https://github.com/jamesdbrock/fannkuch-redux
 
 -- regex-dna Haskell GHC #2
+-- regex-dna-02 +RTS -N4 -H250M -RTS 0 < resources/fasta-06.5000000
 executable regex-dna-02
   hs-source-dirs:     src
   main-is:            regex-dna-02.hs
-  ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -Wall
+  ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -w
   build-depends:      base,parallel,regex-pcre-builtin,bytestring,array
 
 -- regex-dna Haskell GHC #2
--- benchmark regex-dna-02
+-- Benchmark regex-dna-02-criterion
 executable regex-dna-02-criterion
   hs-source-dirs:     src
   main-is:            regex-dna-02-criterion.hs
   ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -Wall
   build-depends:      base,parallel,regex-pcre-builtin,bytestring,array,criterion
 
+-- Test-Suite regex-dna-02-test
+-- regex-dna-02 +RTS -N4 -H250M -RTS 0 < resources/regexdna-input.txt
+
+-- fasta Haskell GHC #6
+-- fasta-06 +RTS -N4 -RTS 25000000 > resources/fasta-06.25000000
+-- fasta-06 +RTS -N4 -RTS 5000000 > resources/fasta-06.5000000
+executable fasta-06
+  hs-source-dirs:     src
+  main-is:            fasta-06.hs
+  ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -XOverloadedStrings
+  build-depends:      base,bytestring

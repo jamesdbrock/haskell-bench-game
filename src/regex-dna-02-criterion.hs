@@ -32,7 +32,6 @@ import qualified Data.ByteString as B
 import qualified Data.ByteString.Internal as BI
 import Data.Array.Base
 import Data.List
-import Data.Word
 import Data.ByteString.Unsafe
 
 import Criterion.Main
