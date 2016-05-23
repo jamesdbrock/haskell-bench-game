@@ -52,4 +52,4 @@ executable k-nucleotide-candidate
   hs-source-dirs:     src
   main-is:            k-nucleotide-candidate.hs
   ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -XOverloadedStrings -funbox-strict-fields
-  build-depends:      base,bytestring,hashtables
+  build-depends:      base,bytestring,hashtables,hashable

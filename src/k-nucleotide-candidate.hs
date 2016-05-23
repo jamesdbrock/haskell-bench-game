@@ -3,7 +3,7 @@
 -- http://benchmarksgame.alioth.debian.org/
 --
 -- Contributed by Branimir Maksimovic
--- Modified for Data.HashMap.Strict by James Brock
+-- Modified by James Brock
 --
 import Data.Bits
 import Data.Char
@@ -18,8 +18,8 @@ import Foreign.Storable
 import Foreign.Marshal.Alloc
 import Control.Concurrent
 import Text.Printf
---- import Data.HashMap.Strict
-import qualified Data.HashTable.ST.Basic as H
+import Data.Hashable
+import qualified Data.HashTable.IO as H
 
 main = do
     let skip = do
@@ -41,7 +41,7 @@ execute content (S s) = writeCount content s
 writeFrequencies :: S.ByteString -> Int -> IO ()
 writeFrequencies input size = do
     ht <- tcalculate input size
-    lst <- Main.foldM (\lst (k,v)->do
+    lst <- H.foldM (\lst (k,v)->do
         v' <- peek v
         return $ (k,v'):lst) [] ht
     let sorted = sortBy (\(_,x) (_,y) -> y `compare` x) lst
@@ -56,7 +56,7 @@ writeCount input string = do
     let size = length string
         k = T (toNum (S.pack string) 0 size) size
     ht <- tcalculate input size
-    res <- Main.lookup ht k
+    res <- H.lookup ht k
     case res of
         Nothing -> printf "0\t%s\n" string
         Just v -> do
@@ -74,16 +74,17 @@ tcalculate input size = do
                         answer <- action
                         putMVar var answer
                     return var) actions
-    result <- newTable :: IO HM
+    --- result <- H.new :: IO HM
+    result <- H.newSized 4096:: IO HM
     results <- mapM takeMVar vars
-    mapM_ (\ht -> Main.foldM (\lst (k,v) -> do
-                            res <- Main.lookup lst k
+    mapM_ (\ht -> H.foldM (\lst (k,v) -> do
+                            res <- H.lookup lst k
                             case res of
                                 Nothing -> do
                                     r1 <- peek v
                                     r2 <- malloc
                                     poke r2 r1
-                                    Main.insert lst k r2
+                                    H.insert lst k r2
                                 Just v1 -> do
                                     r1 <- peek v1
                                     r2 <- peek v
@@ -93,18 +94,19 @@ tcalculate input size = do
 
 calculate :: S.ByteString -> Int -> Int -> Int -> IO HM
 calculate input beg size incr = do
-    !ht <- newTable :: IO HM
+    --- !ht <- H.new :: IO HM
+    !ht <- H.newSized 4096 :: IO HM
     let
         calculate' i
          | i >= ((S.length input)+1 - size) = return ht
          | otherwise = do
             let k =  T (toNum input i size) size
-            res <- Main.lookup ht k
+            res <- H.lookup ht k
             case res of
                 Nothing -> do
                     !r <- malloc
                     poke r 1
-                    Main.insert ht k r
+                    H.insert ht k r
                 Just v -> do
                     !r <- peek v
                     poke v (r+1)
@@ -134,15 +136,21 @@ toNumA = array (0,255) [(ord 'a',0),(ord 'c',1),(ord 't',2),(ord 'g',3),
             (ord 'A',0),(ord 'C',1),(ord 'T',2),(ord 'G',3)]
 
 data T = T !Int64 !Int
+
 instance Eq T where
     (T a _) == (T b _) = a == b
 
-class Hash h where
-    hash :: h -> Int64
-instance Hash T where
-    hash (T a _) = a
+instance Hashable T where
+    --- hashWithSalt s (T a b) = s `hashWithSalt` a `hashWithSalt` b
+    hashWithSalt s (T a _) = s `hashWithSalt` a
+    hash (T a _) = fromIntegral a
 
-type HM = H.HashTable T (Ptr Int)
+--- class Hash h where
+---     hash :: h -> Int64
+--- instance Hash T where
+---     hash (T a _) = a
+
+type HM = H.BasicHashTable T (Ptr Int)
 --- type HM = HashMap T (Ptr Int)
 --- data HashMap k v = HashMap !(IOArray Int64 [(k,v)])
 --- tsz = 4096
