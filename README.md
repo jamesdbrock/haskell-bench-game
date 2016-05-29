@@ -7,20 +7,20 @@ The object of the game is to move Haskell to a higher rank on the [Which program
 To play the game, one usually goes to the benchmarks game website, copies an existing benchmark Haskell implementation, and then makes a `.cabal` file and a `stack.yaml`, gets the program to build, and then sets up a testing harness. This repo sets all that up so that playing the game is less like work and more like a game.
 
 
-## Haskell Champions 2016-04-15
+## Haskell Champions 2016-05-29
 
 | Benchmark | How Much Slower | Program |
 |---|---|---|
-|[pidigits](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=pidigits)|1.6×|[Haskell GHC #4](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=pidigits&lang=ghc&id=4)|
+|[pidigits](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=pidigits)|1.8×|[Haskell GHC #4](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=pidigits&lang=ghc&id=4)|
 |[spectral-norm](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=spectralnorm)|2.0×|[Haskell GHC #4](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=spectralnorm&lang=ghc&id=4)|
 |[n-body](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=nbody)|2.6×|[Haskell GHC #2](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=nbody&lang=ghc&id=2)|
-|[fannkuch-redux](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=fannkuchredux)|2.1×|[Haskell GHC #6](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=fannkuchredux&lang=ghc&id=6)|
-|[reverse-complement](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=revcomp)|2.8×|[Haskell GHC #3](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=revcomp&lang=ghc&id=3)|
+|[fannkuch-redux](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=fannkuchredux)|1.9×|[Haskell GHC #3](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=fannkuchredux&lang=ghc&id=3)|
+|[reverse-complement](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=revcomp)|3.4×|[Haskell GHC #3](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=revcomp&lang=ghc&id=3)|
 |[regex-dna](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=regexdna)|4.9×|[Haskell GHC #2](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=regexdna&lang=ghc&id=2)|
 |[fasta](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=fasta)|2.2×|[Haskell GHC #6](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=fasta&lang=ghc&id=6)|
-|[binary-trees](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=binarytrees)|6.2×|[Haskell GHC #4](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=binarytrees&lang=ghc&id=4)|
+|[binary-trees](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=binarytrees)|6.4×|[Haskell GHC #4](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=binarytrees&lang=ghc&id=4)|
 |[mandelbrot](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=mandelbrot)|2.6×|[Haskell GHC #2](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=mandelbrot&lang=ghc&id=2)|
-|[k-nucleotide](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=knucleotide)|2.7×|[Haskell GHC](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=knucleotide&lang=ghc&id=1)|
+|[k-nucleotide](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=knucleotide)|~~2.7×~~|Disqualified: ~~[Haskell GHC](http://benchmarksgame.alioth.debian.org/u64q/program.php?test=knucleotide&lang=ghc&id=1)~~ "k-nucleotide now explicitly requires built-in / library HashMap" -- Issac Gouy|
 |[fasta-redux](http://benchmarksgame.alioth.debian.org/u64q/performance.php?test=fastaredux)||No entry|
 
 TODO generate this table from the [Summary Data](http://benchmarksgame.alioth.debian.org/u64q/summarydata.php).
