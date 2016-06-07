@@ -23,11 +23,11 @@ executable regex-dna-02
 
 -- regex-dna Haskell GHC #2
 -- Benchmark regex-dna-02-criterion
-executable regex-dna-02-criterion
-  hs-source-dirs:     src
-  main-is:            regex-dna-02-criterion.hs
-  ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -Wall
-  build-depends:      base,parallel,regex-pcre-builtin,bytestring,array,criterion
+-- executable regex-dna-02-criterion
+--   hs-source-dirs:     src
+--   main-is:            regex-dna-02-criterion.hs
+--   ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -Wall
+--   build-depends:      base,parallel,regex-pcre-builtin,bytestring,array,criterion
 
 -- Test-Suite regex-dna-02-test
 -- regex-dna-02 +RTS -N4 -H250M -RTS 0 < resources/regexdna-input.txt
@@ -41,13 +41,14 @@ executable fasta-06
   ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -XOverloadedStrings
   build-depends:      base,bytestring
 
--- k-nucleotide-01 +RTS -N4 -K2048M -RTS 0 < resources/fasta-06.25000000
+-- k-nucleotide-01 +RTS -N4 -qg -RTS 0 < resources/fasta-06.25000000
 executable k-nucleotide-01
   hs-source-dirs:     src
   main-is:            k-nucleotide-01.hs
   ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -XOverloadedStrings -funbox-strict-fields
   build-depends:      base,bytestring
 
+-- k-nucleotide-candidate +RTS -N4 -qg -RTS 0 < resources/fasta-06.25000000
 executable k-nucleotide-candidate
   hs-source-dirs:     src
   main-is:            k-nucleotide-candidate.hs

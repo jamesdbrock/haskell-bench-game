@@ -13,6 +13,7 @@ import Data.Array.Base
 import Data.Array.Unboxed
 import Data.Array.IO
 import qualified Data.ByteString.Char8 as S
+import Control.Monad.IO.Class
 import Foreign.Ptr
 import Foreign.Storable
 import Foreign.Marshal.Alloc
@@ -75,41 +76,77 @@ tcalculate input size = do
                         putMVar var answer
                     return var) actions
     --- result <- H.new :: IO HM
-    result <- H.newSized 4096:: IO HM
+    result <- H.newSized (2 ^ 12):: IO HM
     results <- mapM takeMVar vars
     mapM_ (\ht -> H.foldM (\lst (k,v) -> do
-                            res <- H.lookup lst k
-                            case res of
-                                Nothing -> do
-                                    r1 <- peek v
-                                    r2 <- malloc
-                                    poke r2 r1
-                                    H.insert lst k r2
-                                Just v1 -> do
-                                    r1 <- peek v1
-                                    r2 <- peek v
-                                    poke v1 (r1+r2)
-                            return lst) result ht) results
+
+                            H.mutate lst k (\res ->
+                                case res of
+                                    Nothing -> do
+                                        r1 <- peek v
+                                        r2 <- malloc
+                                        poke r2 r1
+                                        return (Just r2, ())
+                                    Just v1 -> do
+                                        r1 <- peek v1
+                                        r2 <- peek v
+                                        poke v1 (r1+r2)
+                                        return (Just v1, ())
+                                )
+
+
+                            --- res <- H.lookup lst k
+                            --- case res of
+                            ---     Nothing -> do
+                            ---         r1 <- peek v
+                            ---         r2 <- malloc
+                            ---         poke r2 r1
+                            ---         H.insert lst k r2
+                            ---     Just v1 -> do
+                            ---         r1 <- peek v1
+                            ---         r2 <- peek v
+                            ---         poke v1 (r1+r2)
+
+
+                            return lst
+
+                            ) result ht) results
     return result
 
 calculate :: S.ByteString -> Int -> Int -> Int -> IO HM
 calculate input beg size incr = do
     --- !ht <- H.new :: IO HM
-    !ht <- H.newSized 4096 :: IO HM
+    !ht <- H.newSized (2 ^ 12) :: IO HM
     let
         calculate' i
          | i >= ((S.length input)+1 - size) = return ht
          | otherwise = do
-            let k =  T (toNum input i size) size
-            res <- H.lookup ht k
-            case res of
-                Nothing -> do
-                    !r <- malloc
-                    poke r 1
-                    H.insert ht k r
-                Just v -> do
-                    !r <- peek v
-                    poke v (r+1)
+            let k = T (toNum input i size) size
+
+            H.mutate ht k (\ !res ->
+                case res of
+                    Nothing -> do
+                        !r <- malloc
+                        poke r 1
+                        return (Just r, ())
+                    Just v -> do
+                        !r <- peek v
+                        poke v (r+1)
+                        return (Just v, ())
+                )
+
+
+            --- res <- H.lookup ht k
+            --- case res of
+            ---     Nothing -> do
+            ---         !r <- malloc
+            ---         poke r 1
+            ---         H.insert ht k r
+            ---     Just v -> do
+            ---         !r <- peek v
+            ---         poke v (r+1)
+
+
             calculate' (i+incr)
     calculate' beg
 
