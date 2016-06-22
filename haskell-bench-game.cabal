@@ -41,6 +41,12 @@ executable fasta-06
   ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -XOverloadedStrings
   build-depends:      base,bytestring
 
+executable fasta-candidate
+  hs-source-dirs:     src
+  main-is:            fasta-candidate.hs
+  ghc-options:        -fllvm -O2 -XBangPatterns -threaded -rtsopts -XOverloadedStrings
+  build-depends:      base,bytestring
+
 -- k-nucleotide-01 +RTS -N4 -qg -RTS 0 < resources/fasta-06.25000000
 executable k-nucleotide-01
   hs-source-dirs:     src
