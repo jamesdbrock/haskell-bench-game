@@ -85,7 +85,7 @@ Yeah, go for it. We can always copy-paste your code back here from the website. 
 
 #### Is this a game or like, real?
 
-Bad software has consequences. Good languages produce good software. In the eternal quarrel over which languages are good, the Alioth website is the sturdiest point of reference.
+Bad software has consequences. Good languages produce good software. In the endless quarrel over which languages are good, the Alioth website is the sturdiest point of reference.
 
 #### Isn't it true that all computer programming languages are good, you just have to pick the right tool for the job?
 
