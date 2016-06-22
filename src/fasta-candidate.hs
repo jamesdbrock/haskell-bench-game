@@ -52,13 +52,6 @@ make name n0 tbl seed0 = do
     replicateM_ 4 . forkIO $ worker input finished lookupTable
     takeMVar finished
 
-buildLookupTableOld tbl =
-    let fill ((c,p):cps) j =
-            let !k = min modulus (floor (fromIntegral modulus * (p::Float) + 1))
-            in B.replicate (k - j) c : fill cps k
-        fill _ _ = []
-     in B.concat $ fill (scanl1 (\(_,p) (c,q) -> (c,p+q)) tbl) 0
-
 buildLookupTable tbl = do
     cumProbsBuf <- mallocArray (length tbl)
     valuesBuf <- mallocArray (length tbl)
@@ -70,6 +63,12 @@ buildLookupTable tbl = do
             go (i+1) (cum+p1) xs
         go _ _ [] = return ()
     go 0 0.0 tbl
+
+    --- forM_ [0..length tbl-1] $ \i -> do
+    ---     cum <- peekElemOff cumProbsBuf i
+    ---     v <- peekElemOff valuesBuf i
+    ---     putStrLn $ [chr $ fromIntegral v] ++ " " ++ show cum
+
     return $ LookupTable cumProbsBuf valuesBuf
 
 worker input finished lookupTable = do
